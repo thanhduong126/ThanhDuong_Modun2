@@ -17,19 +17,19 @@ public class DaoNguocCacPhanTuTrongMang {
 		do {
 			System.out.println("Nhập độ dài của mảng: ");
 			size = scanner.nextInt();
-			if (size>20){
+			if (size > 20) {
 				System.out.println("Độ dài cần nhập bé hơn 20!");
 			}
-		}while (size>20);
-		array=new int[size];
+		} while (size > 20);
+		array = new int[size];
 
 		for (int i = 0; i < array.length; i++) {
-			System.out.println("Nhập phần tử thứ "+(i+1));
+			System.out.println("Nhập phần tử thứ " + (i + 1));
 			array[i] = scanner.nextInt();
 		}
 		System.out.print("Mảng vừa nhập là: ");
 		for (int i = 0; i < array.length; i++) {
-			System.out.print(array[i]+" ");
+			System.out.print(array[i] + " ");
 		}
 		for (int j = 0; j < array.length / 2; j++) {
 			int temp = array[j];
@@ -38,8 +38,8 @@ public class DaoNguocCacPhanTuTrongMang {
 		}
 		System.out.println("Mảng đã được đảo ngược: ");
 		for (int x : array
-		){
-			System.out.print(x+" ");
+		) {
+			System.out.print(x + " ");
 		}
 
 	}
