@@ -18,7 +18,7 @@ public class MapGameMineSweeper {
 //		1*10
 //		1110
 //		Hướng dẫn
-//		Hãy tạo project, tạo class MineSweeper và hàm main trước khi bắt đầu.
+//		Hãy tạo project, tạo class MineSweeper và hàm Main trước khi bắt đầu.
 //
 //		Bước 1: tạo báo cáo từ một bản đồ 1x1
 //

@@ -32,7 +32,7 @@ public class UngDungDocSoThanhChu {
 //	final static String NUMBER_10 = "Ten";
 //	final static String MILLION = "ty";
 //	final static String BILLION = "hundred";
-//	public static void main(String[] args) {
+//	public static void Main(String[] args) {
 //
 //		Scanner scanner = new Scanner(System.in);
 //		int choise;
