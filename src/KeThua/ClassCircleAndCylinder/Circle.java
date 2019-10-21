@@ -12,6 +12,14 @@ public class Circle {
 		this.color = color;
 	}
 
+	public Circle(double v) {
+
+	}
+
+	public Circle(double v, String indigo, boolean b) {
+
+	}
+
 	public float getBanKinh() {
 		return banKinh;
 	}
@@ -31,7 +39,7 @@ public class Circle {
 	@Override
 	public String toString() {
 		return "Circle: \n" +
-				"Bán kính: " + banKinh +"\b\b\n"+
-				"Color: " + color +"\n";
+				"Bán kính: " + banKinh + "\b\b\n" +
+				"Color: " + color + "\n";
 	}
 }
