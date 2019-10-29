@@ -17,8 +17,8 @@ public class House extends Service {
 				;
 	}
 
-	public House(String id, String tenDichVu, int dienTichSuDung, double chiPhiThue, int soLuongNguoiToiDa, String kieuThue, String tieuChuanPhongHouse, String tienNghiKhacHouse, int soTangHouse) {
-		super(id, tenDichVu, dienTichSuDung, chiPhiThue, soLuongNguoiToiDa, kieuThue);
+	public House(String id, String tenDichVu, float dienTichSuDung, double chiPhiThue, int soLuongNguoiToiDa, String kieuThue, String dichVuDiKem, String tieuChuanPhongHouse, String tienNghiKhacHouse, int soTangHouse) {
+		super(id, tenDichVu, dienTichSuDung, chiPhiThue, soLuongNguoiToiDa, kieuThue, dichVuDiKem);
 		this.tieuChuanPhongHouse = tieuChuanPhongHouse;
 		this.tienNghiKhacHouse = tienNghiKhacHouse;
 		this.soTangHouse = soTangHouse;

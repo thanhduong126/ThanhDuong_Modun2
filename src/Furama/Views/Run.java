@@ -1,9 +1,9 @@
 package Furama.Views;
+
 import Furama.Controllers.MainController;
-public class Main {
+
+public class Run {
 	public static void main(String[] args) {
 		MainController.menuFurama();
 	}
-	}
-
-
+}

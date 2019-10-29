@@ -8,9 +8,8 @@ public class Villa extends Service {
 
 	public Villa() {
 	}
-
-	public Villa(String id, String tenDichVu, int dienTichSuDung, double chiPhiThue, int soLuongNguoiToiDa, String kieuThue, String tieuChuanPhongVilla, String tienNghiKhacVilla, int soTangVilla, float dienTichHoBoiVilla) {
-		super(id, tenDichVu, dienTichSuDung, chiPhiThue, soLuongNguoiToiDa, kieuThue);
+	public Villa(String id, String tenDichVu, float dienTichSuDung, double chiPhiThue, int soLuongNguoiToiDa, String kieuThue, String dichVuDiKem, String tieuChuanPhongVilla, String tienNghiKhacVilla, int soTangVilla, float dienTichHoBoiVilla) {
+		super(id, tenDichVu, dienTichSuDung, chiPhiThue, soLuongNguoiToiDa, kieuThue, dichVuDiKem);
 		this.tieuChuanPhongVilla = tieuChuanPhongVilla;
 		this.tienNghiKhacVilla = tienNghiKhacVilla;
 		this.soTangVilla = soTangVilla;

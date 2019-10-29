@@ -3,26 +3,24 @@ package Furama.Models;
 public abstract class Service {
 	private String id;
 	private String tenDichVu;
-	private int dienTichSuDung;
+	private float dienTichSuDung;
 	private double chiPhiThue;
 	private int soLuongNguoiToiDa;
 	private String kieuThue; //nam, thang ngay, gio
-
-
+	private String dichVuDiKem;
 	public Service() {
 	}
 
-	public Service(String id, String tenDichVu, int dienTichSuDung, double chiPhiThue, int soLuongNguoiToiDa, String kieuThue) {
+	public abstract String showInfor();
+	public Service(String id, String tenDichVu, float dienTichSuDung, double chiPhiThue, int soLuongNguoiToiDa, String kieuThue, String dichVuDiKem) {
 		this.id = id;
 		this.tenDichVu = tenDichVu;
 		this.dienTichSuDung = dienTichSuDung;
 		this.chiPhiThue = chiPhiThue;
 		this.soLuongNguoiToiDa = soLuongNguoiToiDa;
 		this.kieuThue = kieuThue;
-
+		this.dichVuDiKem = dichVuDiKem;
 	}
-
-	public abstract String showInfor();
 
 	public String getId() {
 		return id;
@@ -40,11 +38,11 @@ public abstract class Service {
 		this.tenDichVu = tenDichVu;
 	}
 
-	public int getDienTichSuDung() {
+	public float getDienTichSuDung() {
 		return dienTichSuDung;
 	}
 
-	public void setDienTichSuDung(int dienTichSuDung) {
+	public void setDienTichSuDung(float dienTichSuDung) {
 		this.dienTichSuDung = dienTichSuDung;
 	}
 
@@ -72,6 +70,14 @@ public abstract class Service {
 		this.kieuThue = kieuThue;
 	}
 
+	public String getDichVuDiKem() {
+		return dichVuDiKem;
+	}
+
+	public void setDichVuDiKem(String dichVuDiKem) {
+		this.dichVuDiKem = dichVuDiKem;
+	}
+
 	@Override
 	public String toString() {
 		return "ID: " + id +
@@ -79,6 +85,6 @@ public abstract class Service {
 				"\nDiện tích sử dụng: " + dienTichSuDung +
 				"\nChi Phi Thuê: " + chiPhiThue +
 				"\nSố lượng người tối đa: " + soLuongNguoiToiDa +
-				"\nKiểu thuê: " + kieuThue ;
+				"\nKiểu thuê: " + kieuThue +"\nDịch vụ đi kèm: "+dichVuDiKem ;
 	}
 }
