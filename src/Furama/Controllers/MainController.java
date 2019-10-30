@@ -1,19 +1,17 @@
 package Furama.Controllers;
 
 import Furama.Commons.FuncWriteAndReadFileCSV;
+import Furama.Expression.ExpressionCustomer;
+import Furama.Expression.ExpressionCustomerImpl;
 import Furama.Expression.ExpressionServiceImpl;
-import Furama.Models.House;
-import Furama.Models.Room;
-import Furama.Models.Service;
-import Furama.Models.Villa;
+import Furama.Models.*;
 
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.UUID;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public class MainController {
 	static Scanner scanner = new Scanner(System.in);
+
 	public static void menuFurama() {
 		displayMainMenu();
 		int choose = scanner.nextInt();
@@ -26,11 +24,16 @@ public class MainController {
 					showServices();
 					break;
 				case 3:
-//					addNewCustomer();
+					addNewCustomer();
 					break;
 				case 4:
-					break;
+					showInformationCustomer();
 				case 5:
+					showInformationCustomer();
+					displayBooking();
+
+					break;
+				case 6:
 					System.exit(0);
 					break;
 				default:
@@ -97,6 +100,11 @@ public class MainController {
 			choose = scanner.nextInt();
 		}
 	}
+	public static void displayBooking(){
+		System.out.println("1.Booking Villa");
+		System.out.println("2.Booking  House");
+		System.out.println("3.Booking  Room");
+	}
 
 	public static void displayMainMenu() {
 		System.out.println("Choose the function you want to use!");
@@ -104,7 +112,8 @@ public class MainController {
 		System.out.println("2.Show Services");
 		System.out.println("3.Add New Customer");
 		System.out.println("4.Show Information Customer");
-		System.out.println("5.Exit");
+		System.out.println("5.Add New Booking Resort ");
+		System.out.println("6.Exit");
 	}
 
 	public static void disPlayManuService() {
@@ -131,13 +140,13 @@ public class MainController {
 		scanner.nextLine();
 		while (!flag) {
 			System.out.println("Nhập tên dịch vụ: ");
-			String checkName=scanner.nextLine();
-			if (Pattern.matches("^([\\p{Lu}]|[\\p{Lu}][\\p{Ll}]{1,8})(\\s([\\p{Lu}]|[\\p{Lu}][\\p{Ll}]{1,10})){0,5}$",checkName)) {
+			String checkName = scanner.nextLine();
+			if (Pattern.matches("^([\\p{Lu}]|[\\p{Lu}][\\p{Ll}]{1,8})(\\s([\\p{Lu}]|[\\p{Lu}][\\p{Ll}]{1,10})){0,5}$", checkName)) {
 				service.setTenDichVu(checkName);
-				flag =true;
+				flag = true;
 			} else {
 				System.out.println("Erro!");
-				flag=false;
+				flag = false;
 			}
 		}
 		System.out.println("---------------------");
@@ -170,49 +179,49 @@ public class MainController {
 		System.out.println("---------------------------");
 		do {
 			try {
-				flag=false;
+				flag = false;
 				System.out.println("Nhập số người tối đa: ");
-				int soNguoiToiDa=scanner.nextInt();
+				int soNguoiToiDa = scanner.nextInt();
 				expressionService.checkSoLuongNguoiToiDa(soNguoiToiDa);
 				service.setSoLuongNguoiToiDa(soNguoiToiDa);
-				flag=true;
-			}catch (Exception ex){
-				System.out.println("Lưu ý tối đa chỉ 20 người!"+ex.getMessage());
+				flag = true;
+			} catch (Exception ex) {
+				System.out.println("Lưu ý tối đa chỉ 20 người!" + ex.getMessage());
 			}
-		}while (!flag);
+		} while (!flag);
 		scanner.nextLine();
 		System.out.println("---------------------------");
 		System.out.println("Kiểu thuê: ");
 		service.setKieuThue(scanner.nextLine());
 		do {
 			try {
-				flag=false;
+				flag = false;
 				System.out.println("Dịch vụ đi kèm gồm có: massage,karaoke,food,drink,car!");
 				System.out.println("Hãy nhập một trong những dịch vụ này!");
-				String dichVuDiKem=scanner.nextLine();
+				String dichVuDiKem = scanner.nextLine();
 				expressionService.getDichVuDiKem(dichVuDiKem);
 				service.setDichVuDiKem(dichVuDiKem);
-				flag=true;
-			}catch (Exception ex){
+				flag = true;
+			} catch (Exception ex) {
 				System.out.println(ex.getMessage());
 			}
-		}while (!flag);
+		} while (!flag);
 	}
 
 	public static void addNewVilla() {
 		ExpressionServiceImpl expressionService = new ExpressionServiceImpl();
 		Service villa = new Villa();
 		setAddService(villa);
-		boolean flag=false;
+		boolean flag = false;
 		while (!flag) {
 			System.out.println("Tiêu chuẩn phòng: ");
-			String checkName=scanner.nextLine();
-			if (Pattern.matches("^([\\p{Lu}]|[\\p{Lu}][\\p{Ll}]{1,8})(\\s([\\p{Lu}]|[\\p{Lu}][\\p{Ll}]{1,10})){0,5}$",checkName)) {
+			String checkName = scanner.nextLine();
+			if (Pattern.matches("^([\\p{Lu}]|[\\p{Lu}][\\p{Ll}]{1,8})(\\s([\\p{Lu}]|[\\p{Lu}][\\p{Ll}]{1,10})){0,5}$", checkName)) {
 				((Villa) villa).setTieuChuanPhongVilla(checkName);
-				flag =true;
+				flag = true;
 			} else {
 				System.out.println("Erro!");
-				flag=false;
+				flag = false;
 			}
 		}
 		System.out.println("---------------------------");
@@ -241,11 +250,11 @@ public class MainController {
 				System.out.println("Nhập vào diện tích hồ bơi: ");
 				float area = scanner.nextFloat();
 				expressionService.checkDienTichSuDungVaDienTichHoBoi(area);
-				((Villa)villa).setDienTichHoBoiVilla(area);
+				((Villa) villa).setDienTichHoBoiVilla(area);
 				flag = true;
 			} catch (Exception ex) {
 				System.out.println("Giá trị nhập vào phải lớn hơn 30." + "\n" + "Lỗi: " + ex.getMessage());
-				flag=false;
+				flag = false;
 			}
 		} while (!flag);
 //		System.out.println("Nhập vào diện tích hồ bơi: ");
@@ -260,16 +269,16 @@ public class MainController {
 		ExpressionServiceImpl expressionService = new ExpressionServiceImpl();
 		Service house = new House();
 		setAddService(house);
-		boolean flag=false;
+		boolean flag = false;
 		while (!flag) {
 			System.out.println("Tiêu chuẩn phòng: ");
-			String checkName=scanner.nextLine();
-			if (Pattern.matches("^([\\p{Lu}]|[\\p{Lu}][\\p{Ll}]{1,8})(\\s([\\p{Lu}]|[\\p{Lu}][\\p{Ll}]{1,10})){0,5}$",checkName)) {
+			String checkName = scanner.nextLine();
+			if (Pattern.matches("^([\\p{Lu}]|[\\p{Lu}][\\p{Ll}]{1,8})(\\s([\\p{Lu}]|[\\p{Lu}][\\p{Ll}]{1,10})){0,5}$", checkName)) {
 				((House) house).setTieuChuanPhongHouse(checkName);
-				flag =true;
+				flag = true;
 			} else {
 				System.out.println("Erro!");
-				flag=false;
+				flag = false;
 			}
 		}
 		System.out.println("--------------------");
@@ -299,7 +308,7 @@ public class MainController {
 		setAddService(room);
 		System.out.println("----------------");
 		ArrayList<Room> rooms = FuncWriteAndReadFileCSV.getRoomFromCSV();
-		rooms.add((Room)room);
+		rooms.add((Room) room);
 		FuncWriteAndReadFileCSV.writerServiceToFileRoomCSV(rooms);
 	}
 
@@ -327,6 +336,120 @@ public class MainController {
 			System.out.println("==================");
 			System.out.println(room.showInfor());
 			System.out.println("==================");
+		}
+	}
+
+	public static void addNewCustomer() {
+		Customer customer = new Customer();
+		ExpressionCustomer expressionCustomer = new ExpressionCustomerImpl();
+		boolean flag = false;
+		customer.setiD(UUID.randomUUID().toString().replace("-", ""));
+		scanner.nextLine();
+		while (!flag) {
+			System.out.println("Nhập họ và tên: ");
+			String checkName = scanner.nextLine();
+			if (Pattern.matches("^([\\p{Lu}]|[\\p{Lu}][\\p{Ll}]{1,8})(\\s([\\p{Lu}]|[\\p{Lu}][\\p{Ll}]{1,10})){0,5}$", checkName)) {
+				customer.setHoTen(checkName);
+				flag = true;
+			} else {
+				System.out.println("Erro!");
+				flag = false;
+			}
+		}
+		System.out.println("-----------------------------");
+		boolean check;
+		do {
+			try {
+				flag = false;
+				do {
+					System.out.println("Nhập ngày sinh: ");
+					String checkDate = scanner.nextLine();
+					check = false;
+					if (expressionCustomer.checkngaySinh(checkDate)) {
+						customer.setNgaySinh(checkDate);
+						check = true;
+					} else {
+						System.out.println("Nhập date lỗi");
+					}
+				} while (!check);
+				flag = true;
+			} catch (Exception ex) {
+				System.out.println("Nhập sai định dạng!");
+			}
+		} while (!flag);
+		System.out.println("------------------");
+		do {
+			try {
+				flag = false;
+				System.out.println("Hãy một trong 3 nhập giới tính sau: Male,Female,Unknow.");
+				String gioiTinh = scanner.nextLine();
+				expressionCustomer.checkgioiTinh(gioiTinh);
+				customer.setGioiTinh(gioiTinh);
+				flag = true;
+			} catch (Exception ex) {
+				System.out.println("Lỗi nhập dữ liệu! Nhập chính xác một trong ba giá trị trên!" + ex.getMessage());
+			}
+		} while (!flag);
+		System.out.println("---------------");
+		do {
+			try {
+				flag = false;
+				do {
+					System.out.println("Số chứng minh: ");
+					String checkID = scanner.nextLine();
+					check = false;
+					if (expressionCustomer.checkIDCard(checkID)) {
+						customer.setSoCmnd(checkID);
+						check = true;
+					} else {
+						System.out.println("Nhập sai định dạng!");
+					}
+				} while (!check);
+				flag = true;
+			} catch (Exception ex) {
+				System.out.println("Nhập sai định dạng! Hãy nhập lại!");
+			}
+		} while (!flag);
+		System.out.println("---------------------");
+		System.out.println("Nhập số điện thoại: ");
+		customer.setSoDt(scanner.nextInt());
+		scanner.nextLine();
+		System.out.println("---------------------");
+		do {
+			try {
+				flag = false;
+				do {
+					System.out.println("Nhập email: ");
+					String checkEmail = scanner.nextLine();
+					check = false;
+					if (expressionCustomer.checkEmail(checkEmail)) {
+						customer.setEmail(checkEmail);
+						check = true;
+					} else {
+						System.out.println("Nhập sai định dạng!");
+					}
+				} while (!check);
+				flag = true;
+			} catch (Exception ex) {
+				System.out.println("Hãy nhập lại!");
+			}
+		} while (!flag);
+		System.out.println("Loại khách: ");
+		customer.setLoaiKhach(scanner.nextLine());
+		System.out.println("Địa chỉ: ");
+		customer.setDiaChi(scanner.nextLine());
+		ArrayList<Customer> customers = FuncWriteAndReadFileCSV.getCustomerFromCSV();
+		customers.add(customer);
+		FuncWriteAndReadFileCSV.writerCustomerToFileCustomerCSV(customers);
+	}
+	public static void showInformationCustomer(){
+		ArrayList<Customer> list =FuncWriteAndReadFileCSV.getCustomerFromCSV();
+		Collections.sort(list,Customer::compareTo);
+		int index=0;
+		for (Customer customer:list) {
+			System.out.println("-----------------");
+			System.out.println((index+=1)+"."+customer.showInfor());
+			System.out.println("-----------------");
 		}
 	}
 }

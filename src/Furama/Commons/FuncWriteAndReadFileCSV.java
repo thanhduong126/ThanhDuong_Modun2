@@ -1,5 +1,6 @@
 package Furama.Commons;
 
+import Furama.Models.Customer;
 import Furama.Models.House;
 import Furama.Models.Room;
 import Furama.Models.Villa;
@@ -20,15 +21,72 @@ public class FuncWriteAndReadFileCSV {
 	private static final String pathVilla = "src/Furama/Data/Villa.csv";
 	private static final String pathHouse = "src/Furama/Data/House.csv";
 	private static final String pathRoom = "src/Furama/Data/Room.csv";
+	private static final String pathCustomer = "src/Furama/Data/Customer.csv";
 	private static final int NUM_OF_LINE_SKIP = 1;
 	private static String[] headerRecordVilla = new String[]{"id", "tenDichVu", "dienTichSuDung",
-			"chiPhiThue", "soLuongNguoiToiDa", "kieuThue","dichVuDiKem", "tieuChuanPhongVilla",
+			"chiPhiThue", "soLuongNguoiToiDa", "kieuThue", "dichVuDiKem", "tieuChuanPhongVilla",
 			"tienNghiKhacVilla", "soTangVilla", "dienTichHoBoiVilla"};
 	private static String[] headerRecordHouse = new String[]{"id", "tenDichVu", "dienTichSuDung",
-			"chiPhiThue", "soLuongNguoiToiDa", "kieuThue","dichVuDiKem",
+			"chiPhiThue", "soLuongNguoiToiDa", "kieuThue", "dichVuDiKem",
 			"tieuChuanPhongHouse", "tienNghiKhacHouse", "soTangHouse"};
 	private static String[] headerRecordRoom = new String[]{"id", "tenDichVu", "dienTichSuDung",
 			"chiPhiThue", "soLuongNguoiToiDa", "kieuThue", "dichVuDiKem"};
+	private static String[] headerRecordCustomer = new String[]{"id", "hoTen", "ngaySinh", "gioiTinh",
+			"soCmnd", "soDt", "email", "loaiKhach", "diaChi"};
+
+	public static void writerCustomerToFileCustomerCSV(ArrayList<Customer> arrayList) {
+		try (Writer writer = new FileWriter(pathCustomer);
+		     CSVWriter csvWriter = new CSVWriter(
+				     writer,
+				     CSVWriter.DEFAULT_SEPARATOR,
+				     CSVWriter.DEFAULT_QUOTE_CHARACTER,
+				     CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+				     CSVWriter.DEFAULT_LINE_END)) {
+			csvWriter.writeNext(headerRecordCustomer);
+			for (Customer customer : arrayList) {
+				csvWriter.writeNext(new String[]{
+						customer.getiD(),
+						customer.getHoTen(),
+						customer.getNgaySinh(),
+						customer.getGioiTinh(),
+						customer.getSoCmnd(),
+						String.valueOf(customer.getSoDt()),
+						customer.getEmail(),
+						customer.getLoaiKhach(),
+						customer.getDiaChi(),
+				});
+			}
+		} catch (IOException ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
+
+	public static ArrayList<Customer> getCustomerFromCSV() {
+		Path path = Paths.get(pathCustomer);
+		if (!Files.exists(path)) {
+			try {
+				Writer writer = new FileWriter(pathCustomer);
+			} catch (IOException ex) {
+				System.out.println(ex.getMessage());
+			}
+		}
+		ColumnPositionMappingStrategy<Customer> strategy = new ColumnPositionMappingStrategy<>();
+		strategy.setType(Customer.class);
+		strategy.setColumnMapping(headerRecordCustomer);
+		CsvToBean<Customer> csvToBean = null;
+		try {
+			csvToBean = new CsvToBeanBuilder<Customer>(new FileReader(pathCustomer))
+					.withMappingStrategy(strategy)
+					.withSeparator(DEFAULT_SEPARATOR)
+					.withQuoteChar(DEFAULT_QUOTE)
+					.withSkipLines(NUM_OF_LINE_SKIP)
+					.withIgnoreLeadingWhiteSpace(true)
+					.build();
+		} catch (FileNotFoundException ex) {
+			System.out.println(ex.getMessage());
+		}
+		return (ArrayList<Customer>) csvToBean.parse();
+	}
 
 	public static void writerServiceToFileVillaCSV(ArrayList<Villa> arrayList) {
 		try (Writer writer = new FileWriter(pathVilla);
