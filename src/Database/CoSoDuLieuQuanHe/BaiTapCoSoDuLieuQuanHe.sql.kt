@@ -1,4 +1,4 @@
-package Database
+package Database.CoSoDuLieuQuanHe
 //lấy toàn bộ trường customer
 //select * from customer
 //
