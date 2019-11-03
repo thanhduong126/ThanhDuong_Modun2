@@ -1,9 +1,6 @@
 package Furama.Commons;
 
-import Furama.Models.Customer;
-import Furama.Models.House;
-import Furama.Models.Room;
-import Furama.Models.Villa;
+import Furama.Models.*;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.ColumnPositionMappingStrategy;
 import com.opencsv.bean.CsvToBean;
@@ -22,6 +19,7 @@ public class FuncWriteAndReadFileCSV {
 	private static final String pathHouse = "src/Furama/Data/House.csv";
 	private static final String pathRoom = "src/Furama/Data/Room.csv";
 	private static final String pathCustomer = "src/Furama/Data/Customer.csv";
+	private static final String pathBooking = "src/Furama/Data/Booking.csv";
 	private static final int NUM_OF_LINE_SKIP = 1;
 	private static String[] headerRecordVilla = new String[]{"id", "tenDichVu", "dienTichSuDung",
 			"chiPhiThue", "soLuongNguoiToiDa", "kieuThue", "dichVuDiKem", "tieuChuanPhongVilla",
@@ -33,7 +31,11 @@ public class FuncWriteAndReadFileCSV {
 			"chiPhiThue", "soLuongNguoiToiDa", "kieuThue", "dichVuDiKem"};
 	private static String[] headerRecordCustomer = new String[]{"id", "hoTen", "ngaySinh", "gioiTinh",
 			"soCmnd", "soDt", "email", "loaiKhach", "diaChi"};
-
+	private static String[] headerRecordBooking = new String[]{"id","hoTen","ngaySinh","gioiTinh",
+			"soCmnd","soDt","email","loaiKhach","diaChi","id","tenDichVu","dienTichSuDung","chiPhiThue",
+			"soLuongNguoiToiDa","kieuThue","dichVuDiKem"
+			};
+	//Customer
 	public static void writerCustomerToFileCustomerCSV(ArrayList<Customer> arrayList) {
 		try (Writer writer = new FileWriter(pathCustomer);
 		     CSVWriter csvWriter = new CSVWriter(
@@ -60,7 +62,7 @@ public class FuncWriteAndReadFileCSV {
 			System.out.println(ex.getMessage());
 		}
 	}
-
+//Customer
 	public static ArrayList<Customer> getCustomerFromCSV() {
 		Path path = Paths.get(pathCustomer);
 		if (!Files.exists(path)) {
@@ -87,7 +89,7 @@ public class FuncWriteAndReadFileCSV {
 		}
 		return (ArrayList<Customer>) csvToBean.parse();
 	}
-
+//Villa
 	public static void writerServiceToFileVillaCSV(ArrayList<Villa> arrayList) {
 		try (Writer writer = new FileWriter(pathVilla);
 		     CSVWriter csvWriter = new CSVWriter(
@@ -115,7 +117,7 @@ public class FuncWriteAndReadFileCSV {
 			System.out.println(ex.getMessage());
 		}
 	}
-
+	//House
 	public static void writerServiceToFileHouseCSV(ArrayList<House> arrayList) {
 		try (Writer writer = new FileWriter(pathHouse);
 		     CSVWriter csvWriter = new CSVWriter(writer,
@@ -143,7 +145,7 @@ public class FuncWriteAndReadFileCSV {
 			System.out.println(ex.getMessage());
 		}
 	}
-
+		//Room
 	public static void writerServiceToFileRoomCSV(ArrayList<Room> arrayList) {
 		try (Writer writer = new FileWriter(pathRoom);
 		     CSVWriter csvWriter = new CSVWriter(writer,
@@ -167,7 +169,7 @@ public class FuncWriteAndReadFileCSV {
 			System.out.println(ex.getMessage());
 		}
 	}
-
+	//Villa
 	public static ArrayList<Villa> getVillaFromCSV() {
 		Path path = Paths.get(pathVilla);
 		if (!Files.exists(path)) {
@@ -194,7 +196,7 @@ public class FuncWriteAndReadFileCSV {
 		}
 		return (ArrayList<Villa>) csvToBean.parse();
 	}
-
+//		House
 	public static ArrayList<House> getHouseFromCSV() {
 		Path path = Paths.get(pathHouse);
 		if (!Files.exists(path)) {
@@ -220,7 +222,7 @@ public class FuncWriteAndReadFileCSV {
 		}
 		return (ArrayList<House>) csvToBean.parse();
 	}
-
+		//Room
 	public static ArrayList<Room> getRoomFromCSV() {
 		Path path = Paths.get(pathRoom);
 		if (!Files.exists(path)) {
@@ -246,5 +248,66 @@ public class FuncWriteAndReadFileCSV {
 			System.out.println(ex.getMessage());
 		}
 		return (ArrayList<Room>) csvToBean.parse();
+	}
+
+
+	//Booking
+	public static ArrayList<Customer> getBookingFromCSV() {
+
+		Path path = Paths.get(pathBooking);
+		if (!Files.exists(path)) {
+			try {
+				Writer writer = new FileWriter(pathBooking);
+			} catch (IOException ex) {
+				System.out.println(ex.getMessage());
+			}
+		}
+		ColumnPositionMappingStrategy<Customer> strategy = new ColumnPositionMappingStrategy<>();
+		strategy.setType(Customer.class);
+		strategy.setColumnMapping(headerRecordBooking);
+		CsvToBean<Customer> csvToBean = null;
+		try {
+			csvToBean = new CsvToBeanBuilder<Customer>(new FileReader(pathCustomer))
+					.withMappingStrategy(strategy)
+					.withSeparator(DEFAULT_SEPARATOR)
+					.withQuoteChar(DEFAULT_QUOTE)
+					.withSkipLines(NUM_OF_LINE_SKIP)
+					.withIgnoreLeadingWhiteSpace(true)
+					.build();
+		} catch (FileNotFoundException ex) {
+			System.out.println(ex.getMessage());
+		}
+		return (ArrayList<Customer>) csvToBean.parse();
+	}
+
+
+	public static void writerCustomerToFileBookingCSV(ArrayList<Customer> arrayList) {
+		try (Writer writer = new FileWriter(pathBooking);
+		     CSVWriter csvWriter = new CSVWriter(writer,
+				     CSVWriter.DEFAULT_SEPARATOR,
+				     CSVWriter.DEFAULT_QUOTE_CHARACTER,
+				     CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+				     CSVWriter.DEFAULT_LINE_END)) {
+			csvWriter.writeNext(headerRecordBooking);
+			for (Customer customer : arrayList) {
+				csvWriter.writeNext(new String[]{
+						customer.getiD(),customer.getHoTen(),customer.getGioiTinh(),
+						customer.getSoCmnd(), String.valueOf(customer.getSoDt()),
+						customer.getEmail(),customer.getLoaiKhach(),customer.getDiaChi(),
+						String.valueOf(customer.get)
+
+//						"id","hoTen","ngaySinh","gioiTinh",
+//						"soCmnd","soDt","email","loaiKhach","diaChi","id","tenDichVu",
+//						"dienTichSuDung","chiPhiThue",
+//						"soLuongNguoiToiDa","kieuThue","dichVuDiKem"
+				});
+			}
+		} catch (IOException ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
+
+	public static void addNewBookingResort(){
+		ArrayList<Customer> listCustomers = FuncWriteAndReadFileCSV.getCustomerFromCSV();
 	}
 }
