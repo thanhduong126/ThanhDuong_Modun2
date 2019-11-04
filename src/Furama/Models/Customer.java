@@ -1,6 +1,7 @@
 package Furama.Models;
 
 public class Customer implements Comparable<Customer> {
+	private Service service;
 	private String iD;
 	private String hoTen;
 	private String ngaySinh;
@@ -98,6 +99,14 @@ public class Customer implements Comparable<Customer> {
 		this.iD = iD;
 	}
 
+	public Service getService() {
+		return service;
+	}
+
+	public void setService(Service service) {
+		this.service = service;
+	}
+
 	public String showInfor() {
 		return "Customer: " +
 				"\nID: " + iD +
@@ -115,9 +124,9 @@ public class Customer implements Comparable<Customer> {
 	public int compareTo(Customer customer) {
 		int kq = this.getHoTen().compareTo(customer.getHoTen());
 		// tên giống nhau thì so sánh tiếp địa chỉ
-		if(kq!=0)
+		if (kq != 0)
 			return kq;
-		kq=this.getDiaChi().compareTo(customer.getDiaChi());
+		kq = this.getDiaChi().compareTo(customer.getDiaChi());
 		return kq;
 	}
 }

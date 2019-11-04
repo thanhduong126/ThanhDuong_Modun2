@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 public class FuncWriteAndReadFileCSV {
 	private static final char DEFAULT_SEPARATOR = ',';
@@ -267,7 +268,7 @@ public class FuncWriteAndReadFileCSV {
 		strategy.setColumnMapping(headerRecordBooking);
 		CsvToBean<Customer> csvToBean = null;
 		try {
-			csvToBean = new CsvToBeanBuilder<Customer>(new FileReader(pathCustomer))
+			csvToBean = new CsvToBeanBuilder<Customer>(new FileReader(pathBooking))
 					.withMappingStrategy(strategy)
 					.withSeparator(DEFAULT_SEPARATOR)
 					.withQuoteChar(DEFAULT_QUOTE)
@@ -294,8 +295,22 @@ public class FuncWriteAndReadFileCSV {
 						customer.getiD(),customer.getHoTen(),customer.getGioiTinh(),
 						customer.getSoCmnd(), String.valueOf(customer.getSoDt()),
 						customer.getEmail(),customer.getLoaiKhach(),customer.getDiaChi(),
-						String.valueOf(customer.get)
+						customer.getService().getId(),customer.getService().getTenDichVu(),
+						String.valueOf(customer.getService().getDienTichSuDung()),
+						String.valueOf(customer.getService().getChiPhiThue()),
+						String.valueOf(customer.getService().getSoLuongNguoiToiDa()),
+						customer.getService().getKieuThue(),
+						customer.getService().getDichVuDiKem()
 
+//				private String iD;
+//				private String hoTen;
+//				private String ngaySinh;
+//				private String gioiTinh;
+//				private String soCmnd;
+//				private int soDt;
+//				private String email;
+//				private String loaiKhach;
+//				private String diaChi;
 //						"id","hoTen","ngaySinh","gioiTinh",
 //						"soCmnd","soDt","email","loaiKhach","diaChi","id","tenDichVu",
 //						"dienTichSuDung","chiPhiThue",
@@ -307,7 +322,31 @@ public class FuncWriteAndReadFileCSV {
 		}
 	}
 
-	public static void addNewBookingResort(){
-		ArrayList<Customer> listCustomers = FuncWriteAndReadFileCSV.getCustomerFromCSV();
+	public static String getNameServicesFromFile(String csvLine){
+		String name ="";
+		if (csvLine!=null){
+			String[] splitData = csvLine.split(",");
+			name=splitData[1];
+		}
+		return name;
 	}
+	public static TreeSet<String> getAllNameServiceFromCSV(String path){
+		BufferedReader br =null;
+		TreeSet<String> result = new TreeSet<String>();
+		try{
+			String line;
+			br =new BufferedReader(new FileReader(path));
+			while ((br.readLine() != null)){
+				line = br.readLine();
+				if (getNameServicesFromFile(line).equals("tenDichVu")){
+					continue;
+				}
+				result.add(getNameServicesFromFile(line));
+			}
+		}catch (IOException ex){
+			System.out.println(ex.getMessage());
+		}
+		return result;
+	}
+
 }
