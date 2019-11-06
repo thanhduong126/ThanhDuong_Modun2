@@ -1,5 +1,3 @@
-package FuramaDatabase
-
 insert into TrinhDo(TrinhDo) values ("Đại Học"),("Cao Đẳng"),("Trung Cấp"),("Tốt Nghiệp Cấp 3");
 insert into ViTri(tenvitri) values ("Tổng Giám Đốc"),("Trưởng Phòng"),("Phó Giám Đốc"),("Phó Trưởng Phòng"),("Kế Toán");
 insert into BoPhan(TenBoPhan) values ("MarketTing"), ("Sale"),("Hành Chính"),("Kho"),("Nhân Sự"),("Văn Phòng");
@@ -20,6 +18,7 @@ values ("Villa",30,4,10,300000,1,2,"Vẫn còn"),
 ("House",20,6,12,400000,2,1,"Vẫn còn"),
 ("Room",35,8,8,800000,1,3,"Vẫn còn");
 
+
 insert into NhanVien(HoTen,ID_ViTri,ID_TrinhDo,ID_BoPhan,NgaySinh,SoCMND,Luong,SDT,Email,DiaChi)
 values ("Thiên",1,2,2,"1994/08/06",3245234,6000000,12312312,"thien@gmail.com","Huế"),
 ("Kiên",4,3,6,"1994/09/01",32345234,7000000,64512312,"kien@gmail.com","Đà Nẵng"),
@@ -39,13 +38,13 @@ values (1,5,2,"2002/01/01","2006/02/06",600000,6000000),
 (3,3,2,"2019/06/06","2019/10/09",600000,7500000);
 
 insert into HopDongChiTiet(IDHopDong,IDDichVuDiKem,soluong)
-values (17,4,5),
-(18,1,1),
-(20,2,4),
-(19,3,3),
-(21,4,2),
-(24,3,1),
-(17,2,5);
+values (1,4,5),
+(2,1,1),
+(3,2,4),
+(4,3,3),
+(5,4,2),
+(6,3,1),
+(7,2,5);
 
 insert into dichvu(TenDichVu,DienDich,SoTang,SoNguoiToiDa,ChiPhiThue,IDKieuThue,IDLoaiDichVu,TrangThai)
 values ("Tent",35,3,11,400000,1,2,"Vẫn còn");
