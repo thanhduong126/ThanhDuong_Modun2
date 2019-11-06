@@ -47,3 +47,5 @@ values (17,4,5),
 (24,3,1),
 (17,2,5);
 
+insert into dichvu(TenDichVu,DienDich,SoTang,SoNguoiToiDa,ChiPhiThue,IDKieuThue,IDLoaiDichVu,TrangThai)
+values ("Tent",35,3,11,400000,1,2,"Vẫn còn");

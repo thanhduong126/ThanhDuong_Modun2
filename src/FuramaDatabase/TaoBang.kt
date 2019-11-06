@@ -102,4 +102,6 @@ foreign key(IDKhachHang) references Khachhang(IDKhachHang),
 foreign key(IDDichVu) references DichVu(IDDichVu)
 );
 
+alter table HopDongChiTiet
+modify column soluong double
 
