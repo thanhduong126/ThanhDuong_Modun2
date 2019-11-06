@@ -1,6 +1,3 @@
-package FuramaDatabase
-
-
 create table ViTri(
 ID_ViTri int auto_increment primary key not null,
 tenvitri varchar(45)
@@ -80,14 +77,7 @@ foreign key (ID_ViTri) references ViTri(ID_ViTri),
 foreign key (ID_TrinhDo) references TrinhDo(ID_TrinhDo),
 foreign key (ID_BoPhan) references BoPhan(ID_BoPhan)
 );
-create table HopDongChiTiet(
-ID_HopDongChiTiet int auto_increment primary key not null,
-IDHopDong int,
-IDDichVuDiKem int,
-soluong int,
-foreign key (IDHopDong) references HopDong(IDHopDong),
-foreign key (IDDichVuDiKem) references DichVuDiKem(IDDichVuDiKem)
-);
+
 create table HopDong(
 IDHopDong int auto_increment primary key not null,
 IDNhanVien int,
@@ -101,7 +91,14 @@ foreign key(IDNhanVien) references NhanVien(IDNhanVien),
 foreign key(IDKhachHang) references Khachhang(IDKhachHang),
 foreign key(IDDichVu) references DichVu(IDDichVu)
 );
+create table HopDongChiTiet(
+ID_HopDongChiTiet int auto_increment primary key not null,
+IDHopDong int,
+IDDichVuDiKem int,
+soluong int,
+foreign key (IDHopDong) references HopDong(IDHopDong),
+foreign key (IDDichVuDiKem) references DichVuDiKem(IDDichVuDiKem)
+);
 
 alter table HopDongChiTiet
 modify column soluong double
-
