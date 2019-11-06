@@ -1,0 +1,173 @@
+create table ViTri(
+ID_ViTri int auto_increment primary key not null,
+tenvitri varchar(45)
+);
+create table TrinhDo(
+ID_TrinhDo int auto_increment primary key not null,
+TrinhDo varchar(45)
+);
+create table BoPhan(
+ID_BoPhan int auto_increment primary key not null,
+TenBoPhan varchar(45)
+);
+create table LoaiKhach(
+IDLoaiKhach int auto_increment primary key not null,
+TenLoaiKhach varchar(45)
+);
+
+create table KieuThue(
+IDKieuThue int auto_increment primary key not null,
+TenKieuThue varchar(45),
+Gia double
+);
+
+create table LoaiDichVu(
+IDLoaiDichVu int auto_increment primary key not null,
+TenLoaiDichVu varchar(45)
+);
+
+create table DichVuDiKem(
+IDDichVuDiKem int auto_increment primary key not null,
+TenDichVuDiKem varchar(45),
+Gia double,
+Donvi varchar(45),
+TrangThaiKhaDung varchar(45)
+);
+
+create table DichVu(
+IDDichVu int auto_increment primary key not null,
+TenDichVu varchar(45),
+DienDich float,
+SoTang int,
+SoNguoiToiDa int,
+ChiPhiThue double,
+IDKieuThue int,
+IDLoaiDichVu int,
+TrangThai varchar(45),
+foreign key (IDKieuThue) references KieuThue(IDKieuThue),
+foreign key (IDLoaiDichVu) references LoaiDichVu(IDLoaiDichVu)
+);
+
+create table KhachHang(
+IDKhachHang int auto_increment primary key not null,
+IDLoaiKhach int,
+HoTen varchar(45),
+NgaySinh date,
+SoCMND varchar(45),
+SDT int(20),
+Email varchar(45),
+DiaChi varchar(45),
+age int,
+foreign key(IDLoaiKhach) references LoaiKhach(IDLoaiKhach)
+);
+-------------
+create table NhanVien(
+IDNhanVien int auto_increment primary key not null,
+HoTen varchar(45),
+ID_ViTri int,
+ID_TrinhDo int,
+ID_BoPhan int,
+NgaySinh date,
+SoCMND varchar(45),
+Luong double,
+SDT varchar(45),
+Email varchar(45),
+DiaChi varchar(45),
+foreign key (ID_ViTri) references ViTri(ID_ViTri),
+foreign key (ID_TrinhDo) references TrinhDo(ID_TrinhDo),
+foreign key (ID_BoPhan) references BoPhan(ID_BoPhan)
+);
+
+create table HopDong(
+IDHopDong int auto_increment primary key not null,
+IDNhanVien int,
+IDKhachHang int,
+IDDichVu int,
+NgayLamHopDong date,
+NgayKetThuc date,
+TienDatCoc double,
+TongTien double,
+foreign key(IDNhanVien) references NhanVien(IDNhanVien),
+foreign key(IDKhachHang) references Khachhang(IDKhachHang),
+foreign key(IDDichVu) references DichVu(IDDichVu)
+);
+create table HopDongChiTiet(
+ID_HopDongChiTiet int auto_increment primary key not null,
+IDHopDong int,
+IDDichVuDiKem int,
+soluong int,
+foreign key (IDHopDong) references HopDong(IDHopDong),
+foreign key (IDDichVuDiKem) references DichVuDiKem(IDDichVuDiKem)
+);
+
+alter table HopDongChiTiet
+modify column soluong double
+
+insert into TrinhDo(TrinhDo) values ("Đại Học"),("Cao Đẳng"),("Trung Cấp"),("Tốt Nghiệp Cấp 3");
+insert into ViTri(tenvitri) values ("Tổng Giám Đốc"),("Trưởng Phòng"),("Phó Giám Đốc"),("Phó Trưởng Phòng"),("Kế Toán");
+insert into BoPhan(TenBoPhan) values ("MarketTing"), ("Sale"),("Hành Chính"),("Kho"),("Nhân Sự"),("Văn Phòng");
+insert into KieuThue(TenKieuThue,gia) values ("Vip",300000),("Nomal",200000);
+insert into LoaiDichVu(TenLoaiDichVu) values ("Vip"),("Nomal"),("Hot");
+insert into DichVuDikem(TenDichVuDiKem,Gia) values ("Karaoke",150000),("Food",200000),("Car",120000),("Drink",180000);
+insert into LoaiKhach(TenLoaiKhach) values ("Diamond"),("Platium"),("Gold");
+
+insert into KhachHang(IDLoaiKhach,Hoten,NgaySinh,SoCMND,SDT,Email,DiaChi,age)
+values (1,"Hoàng","1994/10/10",32423423,2321432,"hoang@gmail.com","Quảng Trị",42),
+(3,"Tiên","1995/10/10",3124234,2342342,"tien@gmail.com","Đà Nẵng",20),
+(2,"Kiên","1992/06/04",2345345,324234,"kien@gmail.com","Huế",30),
+(1,"Dương","1995/09/02",32423423,324234,"duong@gmail.com", "Huế",18),
+(3,"Thanh","1993/05/02",324233443,432434,"thanh@gmail.com", "Đà Nẵng",51);
+
+insert into dichvu(TenDichVu,DienDich,SoTang,SoNguoiToiDa,ChiPhiThue,IDKieuThue,IDLoaiDichVu,TrangThai)
+values ("Villa",30,4,10,300000,1,2,"Vẫn còn"),
+("House",20,6,12,400000,2,1,"Vẫn còn"),
+("Room",35,8,8,800000,1,3,"Vẫn còn");
+
+
+insert into NhanVien(HoTen,ID_ViTri,ID_TrinhDo,ID_BoPhan,NgaySinh,SoCMND,Luong,SDT,Email,DiaChi)
+values ("Thiên",1,2,2,"1994/08/06",3245234,6000000,12312312,"thien@gmail.com","Huế"),
+("Kiên",4,3,6,"1994/09/01",32345234,7000000,64512312,"kien@gmail.com","Đà Nẵng"),
+("Hùng",3,2,5,"1995/05/04",435345234,6500000,35345342,"hung@gmail.com","Quảng Trị"),
+("An",1,2,4,"1990/10/02",5756234,6500000,35345342,"an@gmail.com","Quảng Nam"),
+("Ji Jeon",2,3,3,"1997/01/02",23423234,7500000,3453445342,"jijeon@gmail.com","Đà Nẵng"),
+("Jaya",5,1,3,"1997/01/02",4534234,8500000,56455342,"jaya@gmail.com","Quảng Bình");
+
+insert into HopDong(IDNhanVien,IDKhachHang,IDDichVu,NgayLamHopDong,NgayKetThuc,TienDatCoc,TongTien)
+values (1,5,2,"2002/01/01","2006/02/06",600000,6000000),
+(2,3,1,"2010/02/09","2018/04/04",400000,7000000),
+(3,2,3,"2018/02/12","2019/01/08",800000,9000000),
+(4,4,2,"2018/09/11","2016/04/09",500000,6500000),
+(5,1,2,"2019/04/11","2019/09/09",600000,5500000),
+(6,5,1,"2019/09/11","2019/10/15",500000,6500000),
+(4,4,3,"2018/02/02","2018/10/09",700000,5500000),
+(3,3,2,"2019/06/06","2019/10/09",600000,7500000);
+
+insert into HopDongChiTiet(IDHopDong,IDDichVuDiKem,soluong)
+values (1,4,5),
+(2,1,1),
+(3,2,4),
+(4,3,3),
+(5,4,2),
+(6,3,1),
+(7,2,5);
+
+insert into dichvu(TenDichVu,DienDich,SoTang,SoNguoiToiDa,ChiPhiThue,IDKieuThue,IDLoaiDichVu,TrangThai)
+values ("Tent",35,3,11,400000,1,2,"Vẫn còn");
+
+package FuramaDatabase
+
+-- Câu 2:
+Select * from nhanvien
+where ((HoTen like "H%") or (HoTen like "T%") or (HoTen like "K%")) and length(hoten)<=15;
+-- Câu 3:
+Select * from KhachHang
+where (age >=18 and age<=50) and (diachi="Đà Nẵng" or diachi="Quảng Trị");
+-- Câu4:
+Select hoten,tenloaikhach, count(hopdong.idkhachhang) as 'solandat' from khachhang
+inner join hopdong on khachhang.idkhachhang = hopdong.IDkhachhang
+inner join loaikhach on khachhang.IDLoaiKhach=loaikhach.IDLoaiKhach
+where TenLoaiKhach="Diamond"
+group by hoten
+order by solandat asc;
+
+
