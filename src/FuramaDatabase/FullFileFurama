@@ -154,6 +154,12 @@ values (1,4,5),
 insert into dichvu(TenDichVu,DienDich,SoTang,SoNguoiToiDa,ChiPhiThue,IDKieuThue,IDLoaiDichVu,TrangThai)
 values ("Tent",35,3,11,400000,1,2,"Vẫn còn");
 
+insert into KhachHang(IDLoaiKhach,Hoten,NgaySinh,SoCMND,SDT,Email,DiaChi,age)
+values (1,"Than","1995/10/10",4543423,256532,"than@gmail.com","Huế",42);
+
+insert into HopDong(IDNhanVien,IDKhachHang,IDDichVu,NgayLamHopDong,NgayKetThuc,TienDatCoc,TongTien)
+values (1,5,2,"2019/01/02","2019/02/06",600000,6000000);
+
 package FuramaDatabase
 
 -- Câu 2:
@@ -169,5 +175,59 @@ inner join loaikhach on khachhang.IDLoaiKhach=loaikhach.IDLoaiKhach
 where TenLoaiKhach="Diamond"
 group by hoten
 order by solandat asc;
+-- Câu 5:
+select khachhang.IDKhachHang,HoTen,loaikhach.TenLoaiKhach,hopdong.IDHopDong,dichvu.TenDichVu,NgayLamHopDong,NgayKetThuc,sum(dichvu.ChiPhiThue + hopdongchitiet.soluong*dichvudikem.Gia) as Tongtien
+from hopdong
+right join khachhang on hopdong.IDKhachHang=khachhang.IDKhachHang
+left join loaikhach on khachhang.IDLoaiKhach=loaikhach.IDLoaiKhach
+left join dichvu on hopdong.IDDichVu=dichvu.IDDichVu
+left join loaidichvu on dichvu.IDLoaiDichVu=loaidichvu.IDLoaiDichVu
+left join hopdongchitiet on hopdong.IDHopDong=hopdongchitiet.IDHopDong
+left join dichvudikem on hopdongchitiet.IDDichVuDiKem=dichvudikem.IDDichVuDiKem
+group by khachhang.IDKhachHang;
 
+-- Câu 6:
+select dichvu.IDDichVu,dichvu.TenDichVu,dichvu.DienDich,dichvu.ChiPhiThue,loaidichvu.TenLoaiDichVu
+from dichvu
+inner join loaidichvu on dichvu.IDLoaiDichVu=loaidichvu.IDLoaiDichVu
+where not exists ( select hopdong.NgayLamHopDong from hopdong where (hopdong.NgayLamHopDong between "2019-01-01" and "2019-03-01")
+ and dichvu.IDDichVu=hopdong.IDDichVu);
+
+-- Câu 7:
+select dichvu.IDDichVu,dichvu.TenDichVu,dichvu.DienDich,dichvu.SoNguoiToiDa,dichvu.ChiPhiThue,loaidichvu.TenLoaiDichVu
+from dichvu
+inner join loaidichvu on loaidichvu.IDLoaiDichVu=dichvu.IDLoaiDichVu
+where exists(select hopdong.IDHopDong from hopdong where year (hopdong.NgayLamHopDong)="2018" and hopdong.IDDichVu=dichvu.IDDichVu)
+			and not exists(select hopdong.IDHopDong from hopdong where year(hopdong.NgayLamHopDong)="2019" and hopdong.IDDichVu=dichvu.IDDichVu);
+
+
+-- Câu 8:
+		-- cách 1>>>
+select distinct khachhang.HoTen from khachhang;
+		-- cách 2>>>
+select khachhang.HoTen from khachhang group by khachhang.HoTen;
+		-- cách 3>>>
+select khachhang.HoTen from khachhang union select khachhang.HoTen from khachhang;
+-- Câu 9
+select meses.month , count(month(NgayLamHopDong)) as sokhachhangdangki
+FROM
+           (
+                     SELECT 1 AS MONTH
+                      UNION SELECT 2 AS MONTH
+                      UNION SELECT 3 AS MONTH
+                      UNION SELECT 4 AS MONTH
+                      UNION SELECT 5 AS MONTH
+                      UNION SELECT 6 AS MONTH
+                      UNION SELECT 7 AS MONTH
+                      UNION SELECT 8 AS MONTH
+                      UNION SELECT 9 AS MONTH
+                      UNION SELECT 10 AS MONTH
+                      UNION SELECT 11 AS MONTH
+                      UNION SELECT 12 AS MONTH
+           ) as meses
+left join hopdong on month(hopdong.NgayLamHopDong) = meses.month
+ left join khachhang on khachhang.IDKhachHang = hopdong.IDKhachHang
+where year(hopdong.NgayLamHopDong) = '2019' or year(hopdong.NgayLamHopDong) is null or month(hopdong.NgayLamHopDong) is null
+group by meses.month
+order by meses.month;
 

@@ -48,3 +48,9 @@ values (1,4,5),
 
 insert into dichvu(TenDichVu,DienDich,SoTang,SoNguoiToiDa,ChiPhiThue,IDKieuThue,IDLoaiDichVu,TrangThai)
 values ("Tent",35,3,11,400000,1,2,"Vẫn còn");
+
+insert into KhachHang(IDLoaiKhach,Hoten,NgaySinh,SoCMND,SDT,Email,DiaChi,age)
+values (1,"Than","1995/10/10",4543423,256532,"than@gmail.com","Huế",42);
+
+insert into HopDong(IDNhanVien,IDKhachHang,IDDichVu,NgayLamHopDong,NgayKetThuc,TienDatCoc,TongTien)
+values (1,5,2,"2019/01/02","2019/02/06",600000,6000000);
