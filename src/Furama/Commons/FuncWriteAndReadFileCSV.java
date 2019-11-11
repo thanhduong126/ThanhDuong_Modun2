@@ -302,19 +302,6 @@ public class FuncWriteAndReadFileCSV {
 						customer.getService().getKieuThue(),
 						customer.getService().getDichVuDiKem()
 
-//				private String iD;
-//				private String hoTen;
-//				private String ngaySinh;
-//				private String gioiTinh;
-//				private String soCmnd;
-//				private int soDt;
-//				private String email;
-//				private String loaiKhach;
-//				private String diaChi;
-//						"id","hoTen","ngaySinh","gioiTinh",
-//						"soCmnd","soDt","email","loaiKhach","diaChi","id","tenDichVu",
-//						"dienTichSuDung","chiPhiThue",
-//						"soLuongNguoiToiDa","kieuThue","dichVuDiKem"
 				});
 			}
 		} catch (IOException ex) {

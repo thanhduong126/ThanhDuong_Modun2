@@ -6,6 +6,7 @@ import Furama.Expression.ExpressionCustomer;
 import Furama.Expression.ExpressionCustomerImpl;
 import Furama.Expression.ExpressionServiceImpl;
 import Furama.Models.*;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -39,6 +40,9 @@ public class MainController {
 					setMapEmployee();
 					break;
 				case 7:
+					getticket();
+					break;
+				case 8:
 					System.exit(0);
 					break;
 				default:
@@ -130,7 +134,8 @@ public class MainController {
 		System.out.println("4.Show Information Customer");
 		System.out.println("5.Add New Booking Resort ");
 		System.out.println("6.Map of Employee");
-		System.out.println("7.Exit");
+		System.out.println("7.Buy Ticket");
+		System.out.println("8.Exit");
 	}
 
 	public static void disPlayManuService() {
@@ -512,18 +517,18 @@ public class MainController {
 				customer.setService(villa);
 				break;
 			case 2:
-			i = 1;
-			ArrayList<House> listHouses = FuncWriteAndReadFileCSV.getHouseFromCSV();
-			for (House house : listHouses) {
-				System.out.println("------------");
-				System.out.println("No." + (i) + "\n" + house.showInfor());
-				System.out.println("------------");
-				i++;
-			}
-			System.out.println("Chọn dịch vụ !");
-			House house = listHouses.get(scanner.nextInt() - 1);
-			customer.setService(house);
-			break;
+				i = 1;
+				ArrayList<House> listHouses = FuncWriteAndReadFileCSV.getHouseFromCSV();
+				for (House house : listHouses) {
+					System.out.println("------------");
+					System.out.println("No." + (i) + "\n" + house.showInfor());
+					System.out.println("------------");
+					i++;
+				}
+				System.out.println("Chọn dịch vụ !");
+				House house = listHouses.get(scanner.nextInt() - 1);
+				customer.setService(house);
+				break;
 			case 3:
 				i = 1;
 				ArrayList<Room> listRooms = FuncWriteAndReadFileCSV.getRoomFromCSV();
@@ -549,51 +554,54 @@ public class MainController {
 	}
 
 
-	private static void showAllNameVillaNotDuplicate(){
+		private static void showAllNameVillaNotDuplicate() {
 		String pathVilla = "src/Furama/Data/Villa.csv";
-		Path path =Paths.get(pathVilla);
-		if (!Files.exists(path)){
+		Path path = Paths.get(pathVilla);
+		if (!Files.exists(path)) {
 			System.out.println("File không có!");
-		}else {
-			TreeSet<String> listVillaTreeSet =FuncWriteAndReadFileCSV.getAllNameServiceFromCSV(pathVilla);
+		} else {
+			TreeSet<String> listVillaTreeSet = FuncWriteAndReadFileCSV.getAllNameServiceFromCSV(pathVilla);
 			System.out.println("\nList TreeSet: ");
-			for (String tr:listVillaTreeSet) {
+			for (String tr : listVillaTreeSet) {
 				System.out.println("-----------");
 				System.out.println(tr);
 				System.out.println("-----------");
 			}
 		}
 	}
-	private static void showAllNameHouseNotDuplicate(){
+
+	private static void showAllNameHouseNotDuplicate() {
 		String pathHouse = "src/Furama/Data/House.csv";
-		Path path =Paths.get(pathHouse);
-		if (!Files.exists(path)){
+		Path path = Paths.get(pathHouse);
+		if (!Files.exists(path)) {
 			System.out.println("File không có!");
-		}else {
-			TreeSet<String> listHouseTreeSet =FuncWriteAndReadFileCSV.getAllNameServiceFromCSV(pathHouse);
+		} else {
+			TreeSet<String> listHouseTreeSet = FuncWriteAndReadFileCSV.getAllNameServiceFromCSV(pathHouse);
 			System.out.println("\nList TreeSet: ");
-			for (String tr:listHouseTreeSet) {
+			for (String tr : listHouseTreeSet) {
 				System.out.println("-----------");
 				System.out.println(tr);
 				System.out.println("-----------");
 			}
 		}
 	}
-	private static void showAllNameRoomNotDuplicate(){
+
+	private static void showAllNameRoomNotDuplicate() {
 		String pathRoom = "src/Furama/Data/Room.csv";
-		Path path =Paths.get(pathRoom);
-		if (!Files.exists(path)){
+		Path path = Paths.get(pathRoom);
+		if (!Files.exists(path)) {
 			System.out.println("File không có!");
-		}else {
-			TreeSet<String> listRoomTreeSet =FuncWriteAndReadFileCSV.getAllNameServiceFromCSV(pathRoom);
+		} else {
+			TreeSet<String> listRoomTreeSet = FuncWriteAndReadFileCSV.getAllNameServiceFromCSV(pathRoom);
 			System.out.println("\nList TreeSet: ");
-			for (String tr:listRoomTreeSet) {
+			for (String tr : listRoomTreeSet) {
 				System.out.println("-----------");
 				System.out.println(tr);
 				System.out.println("-----------");
 			}
 		}
 	}
+
 	public static void setMapEmployee() {
 		Map<Integer, Employee> map = new HashMap<Integer, Employee>();
 		Employee employee1 = map.put(1, new Employee("Hoàng Thanh Dương", "09/02/1995", "4444444444", 324343224, "duong@gmail.com", "Đại học", "Giám Đốc", 8000000));
@@ -608,10 +616,65 @@ public class MainController {
 		Employee employee10 = map.put(10, new Employee("Lê Văn Luyện", "19/10/1989", "555959255", 62929255, "vanP@gmail.com", "Trung học", "Nhân Viên", 5500000));
 
 		for (int i = 1; i <= map.size(); i++) {
-			System.out.println("Key: "+i+"\n" +map.get(i)+"\n");
+			System.out.println("Key: " + i + "\n" + map.get(i) + "\n");
 		}
+	}
+
+	public static void getticket() {
+		Queue<Employee> employees = new LinkedList<Employee>();
+
+		Employee employee1 = new Employee("Hoàng Thanh Dương", "09/02/1995", "4444444444", 324343224, "duong@gmail.com", "Đại học", "Giám Đốc", 8000000);
+		Employee employee2 = new Employee("Trần Đức Toàn", "09/08/1980", "5555555555", 545464564, "toan@gmail.com", "Trung học", "Nhân Viên", 5000000);
+		Employee employee3 = new Employee("Nguyễn Thành Lâm", "09/08/2000", "666666666", 56765757, "lam@gmail.com", "Tiểu học", "Nhân Viên", 3000000);
+		Employee employee4 = new Employee("Nguyễn Văn Chục", "09/08/1990", "6666666666", 22131231, "chuc@gmail.com", "Trung học phổ thông", "Trưởng phòng", 7000000);
+		Employee employee5 = new Employee("Nguyễn Văn A", "09/08/1985", "777777777", 546464564, "vanA@gmail.com", "Trung học", "Nhân Viên", 6000000);
+		Employee employee6 = new Employee("Nguyễn Văn B", "09/08/1981", "888888888", 54654654, "vanB@gmail.com", "Trung học", "Phó Phòng", 7000000);
+		Employee employee7 = new Employee("Nguyễn Văn C", "10/08/1985", "99999999", 545464655, "vanC@gmail.com", "Trung học cơ sở", "Nhân Viên", 5000000);
+		Employee employee8 = new Employee("Nguyễn Văn D", "15/02/1994", "59595959", 545464564, "vanE@gmail.com", "Trung học", "Nhân Viên", 5000000);
+		Employee employee9 = new Employee("Nguyễn Văn E", "09/12/1983", "555995555", 959595555, "vanF@gmail.com", "Trung học", "Nhân Viên", 5000000);
+		Employee employee10 = new Employee("Lê Văn Luyện", "19/10/1989", "555959255", 62929255, "vanP@gmail.com", "Trung học", "Nhân Viên", 5500000);
+
+		employees.offer(employee1);
+		employees.offer(employee2);
+		employees.offer(employee3);
+		employees.offer(employee4);
+		employees.offer(employee5);
+		employees.offer(employee6);
+		employees.offer(employee7);
+		employees.offer(employee8);
+		employees.offer(employee9);
+		employees.offer(employee10);
+
+		for (Employee e:employees) {
+			System.out.println(e.getHoTen());
+		}
+		employees.remove();
+		System.out.println("--------");
+		System.out.println("Sau khi mua ticket!");
+		System.out.println("--------");
+		for (Employee x:employees) {
+			System.out.println(x.getHoTen());
+		}
+	}
+
+	public static void tuHoSo(){
+		Stack<Employee> stack = new Stack<Employee>();
+
+		Employee employee1 = new Employee("Hoàng Thanh Dương", "09/02/1995", "4444444444", 324343224, "duong@gmail.com", "Đại học", "Giám Đốc", 8000000);
+		Employee employee2 = new Employee("Trần Đức Toàn", "09/08/1980", "5555555555", 545464564, "toan@gmail.com", "Trung học", "Nhân Viên", 5000000);
+		Employee employee3 = new Employee("Nguyễn Thành Lâm", "09/08/2000", "666666666", 56765757, "lam@gmail.com", "Tiểu học", "Nhân Viên", 3000000);
+		Employee employee4 = new Employee("Nguyễn Văn Chục", "09/08/1990", "6666666666", 22131231, "chuc@gmail.com", "Trung học phổ thông", "Trưởng phòng", 7000000);
+		Employee employee5 = new Employee("Nguyễn Văn A", "09/08/1985", "777777777", 546464564, "vanA@gmail.com", "Trung học", "Nhân Viên", 6000000);
+		Employee employee6 = new Employee("Nguyễn Văn B", "09/08/1981", "888888888", 54654654, "vanB@gmail.com", "Trung học", "Phó Phòng", 7000000);
+		Employee employee7 = new Employee("Nguyễn Văn C", "10/08/1985", "99999999", 545464655, "vanC@gmail.com", "Trung học cơ sở", "Nhân Viên", 5000000);
+		Employee employee8 = new Employee("Nguyễn Văn D", "15/02/1994", "59595959", 545464564, "vanE@gmail.com", "Trung học", "Nhân Viên", 5000000);
+		Employee employee9 = new Employee("Nguyễn Văn E", "09/12/1983", "555995555", 959595555, "vanF@gmail.com", "Trung học", "Nhân Viên", 5000000);
+		Employee employee10 = new Employee("Lê Văn Luyện", "19/10/1989", "555959255", 62929255, "vanP@gmail.com", "Trung học", "Nhân Viên", 5500000);
+
+
 
 	}
+
 }
 
 
