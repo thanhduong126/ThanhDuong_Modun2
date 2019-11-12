@@ -117,7 +117,31 @@
 //having solantaohopdong<4;
 //
 //-- Câu 16: Xóa những Nhân viên chưa từng lập được hợp đồng nào từ năm 2017 đến năm 2019.
+//delete from nhanvien where not exists(select nhanvien.IDNhanVien from hopdong
+//where hopdong.NgayLamHopDong between "2017-01-01" and "2019-12-31" and hopdong.IDNhanVien= nhanvien.IDNhanVien);
 //
+//-- Câu 17:
+//update khachhang,(select hopdong.IDKhachHang as id, sum(hopdong.TongTien) as Tongtien from hopdong
+//where year(hopdong.NgayLamHopDong)=2019
+//group by hopdong.IDKhachHang
+//having tongtien>10000000) as temp set khachhang.IDLoaiKhach=(select loaikhach.IDLoaiKhach from loaikhach where loaikhach.TenLoaiKhach="Diamond")
+//where khachhang.IDLoaiKhach=(select loaikhach.IDloaikhach from loaikhach where loaikhach.TenLoaikhach="Platium")
+//and temp.id=khachhang.IDKhachHang;
+//-- Câu 18:
+//delete khachhang,hopdong,hopdongchitiet from khachhang inner join hopdong on khachhang.IDKhachHang= hopdong.IDKhachHang
+//inner join hopdongchitiet on hopdong.IDHopDong=hopdongchitiet.IDHopDong
+//where not exists(select hopdong.IDHopDong where year(hopdong.NgayLamHopDong)>"2016" and khachhang.IDKhachHang=hopdong.IDKhachHang);
+//-- Câu 19:
+//update dichvudikem inner join (select dichvudikem.TenDichVuDiKem as TenDichVuDiKem
+//from hopdongchitiet inner join dichvudikem on dichvudikem.IDDichVuDiKem=hopdongchitiet.IDDichVuDiKem
+//group by dichvudikem.IDDichVuDiKem
+//having count(hopdongchitiet.IDDichVuDiKem)>3) as temp set dichvudikem.Gia=dichvudikem.Gia*2 where dichvudikem.TenDichVuDiKem=temp.TenDichVuDiKem;
+//-- Câu 20:
+//select nhanvien.IDNhanVien as ID, nhanvien.HoTen,nhanvien.Email,nhanvien.SDT,nhanvien.NgaySinh,nhanvien.DiaChi,"nhanvien" as FromTable
+//from nhanvien
+//union all
+//select khachhang.IDKhachHang as ID,khachhang.HoTen,khachhang.Email,khachhang.SDT,khachhang.NgaySinh,khachhang.DiaChi,"khachhang" as FromTable
+//from khachhang;
 //
 //
 //

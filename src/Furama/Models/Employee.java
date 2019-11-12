@@ -1,4 +1,4 @@
-package Furama.Data;
+package Furama.Models;
 
 public class Employee {
 	private String hoTen;

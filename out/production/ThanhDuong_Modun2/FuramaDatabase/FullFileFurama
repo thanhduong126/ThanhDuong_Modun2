@@ -230,4 +230,55 @@ left join hopdong on month(hopdong.NgayLamHopDong) = meses.month
 where year(hopdong.NgayLamHopDong) = '2019' or year(hopdong.NgayLamHopDong) is null or month(hopdong.NgayLamHopDong) is null
 group by meses.month
 order by meses.month;
+-- Câu 10:
+Select hopdong.IDHopDong,hopdong.NgayLamHopDong,hopdong.NgayKetThuc,hopdong.TienDatCoc,count(hopdongchitiet.ID_HopDongChiTiet) as SoLuongDichVuDiKem
+from hopdong
+inner join hopdongchitiet on hopdong.IDHopDong=hopdongchitiet.IDHopDong
+group by IDHopDong;
+
+-- Câu 11:
+select * from khachhang
+inner join loaikhach on khachhang.IDLoaiKhach=loaikhach.IDLoaiKhach
+where TenLoaiKhach="Diamond" and ( DiaChi="Vinh" or DiaChi="Quãng Ngãi");
+
+-- Câu 12: problem
+select hopdong.IDHopDong,nhanvien.HoTen,khachhang.HoTen,khachhang.SDT,dichvu.Tendichvu,count(hopdongchitiet.IDDichVuDiKem) as solansudung
+from hopdong
+inner join nhanvien on hopdong.IDNhanVien=nhanvien.IDNhanVien
+inner join khachhang on hopdong.IDKhachHang=khachhang.IDKhachHang
+inner join dichvu on dichvu.IDDichVu=hopdong.IDDichVu
+inner join hopdongchitiet on hopdong.IDHopDong =hopdongchitiet.IDHopDong
+where not exists(select hopdong.IDHopDong where hopdong.NgayLamHopDong between "2019-01-01" and " 2019-06-31")
+and exists(select hopdong.IDHopDong where hopdong.NgayLamHopDong between "2019-09-01" and "2019-12-31");
+
+-- Câu 13:
+select dichvudikem.TenDichVuDiKem,hopdong.idhopdong,count( hopdongchitiet.IDDichVuDiKem) as solan from dichvudikem
+inner join hopdongchitiet on hopdongchitiet.iddichvudikem = dichvudikem.iddichvudikem
+inner join hopdong on hopdong.idhopdong = hopdongchitiet.idhopdong
+where hopdongchitiet.IDDichVuDiKem >=1
+group by hopdongchitiet.IDDichVuDiKem
+having count( hopdongchitiet.IDDichVuDiKem) >=all( select max(solan) from(select dichvudikem.TenDichVuDiKem,hopdong.idhopdong,count( hopdongchitiet.IDDichVuDiKem) as 'solan' from dichvudikem
+inner join hopdongchitiet on hopdongchitiet.iddichvudikem = dichvudikem.iddichvudikem
+inner join hopdong on hopdong.idhopdong = hopdongchitiet.idhopdong
+where hopdongchitiet.IDDichVuDiKem >=1
+group by hopdongchitiet.IDDichVuDiKem) tmp);
+
+-- Câu 14:
+select hopdong.IDHopDong,loaidichvu.TenLoaiDichVu,dichvudikem.TenDichVuDiKem,count(hopdongchitiet.IDDichVuDiKem) as solansudung
+from hopdong
+inner join loaidichvu on hopdong.IDDichVu = loaidichvu.IDLoaiDichVu
+inner join hopdongchitiet on hopdong.IDHopDong = hopdongchitiet.IDHopDong
+inner join dichvudikem on dichvudikem.IDDichVuDiKem=hopdongchitiet.IDDichVuDiKem
+group by dichvudikem.TenDichVuDiKem having solansudung=1;
+
+-- Câu 15: problem
+ select nhanvien.IDNhanVien,nhanvien.HoTen,nhanvien.SDT,nhanvien.DiaChi,trinhdo.TrinhDo,bophan.TenBoPhan,count(hopdong.IDNhanVien) as solantaohopdong
+ from nhanvien inner join trinhdo on trinhdo.ID_TrinhDo=nhanvien.ID_TrinhDo
+ inner join bophan on bophan.ID_BoPhan=nhanvien.ID_BoPhan
+ inner join hopdong on hopdong.IDNhanVien=nhanvien.IDNhanVien
+ where hopdong.NgayLamHopDong between "2016-01-01" and "2019-21-31"
+ group by nhanvien.HoTen
+ having solantaohopdong<4;
+
+-- Câu 16: Xóa những Nhân viên chưa từng lập được hợp đồng nào từ năm 2017 đến năm 2019.
 
